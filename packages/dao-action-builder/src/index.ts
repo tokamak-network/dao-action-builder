@@ -80,6 +80,14 @@ export {
   pausableMethods,
   governorMethods,
   uupsMethods,
+  // Tokamak Network
+  tokamakMethods,
+  tonMethods,
+  wtonMethods,
+  depositManagerMethods,
+  seigManagerMethods,
+  l1BridgeRegistryMethods,
+  layer2ManagerMethods,
 } from './predefined';
 
 // React Hooks

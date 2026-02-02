@@ -1,7 +1,7 @@
 {
   "name": "@tokamak-network/dao-action-builder",
   "version": "0.1.0",
-  "description": "Headless library for building DAO proposal actions - smart contract function calls with parameter validation and calldata encoding",
+  "description": "Headless library for building DAO proposal actions with Tokamak Network support - smart contract function calls with parameter validation and calldata encoding",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -39,7 +39,10 @@
     "proposal",
     "governance",
     "web3",
-    "tokamak"
+    "tokamak",
+    "ton",
+    "wton",
+    "staking"
   ],
   "author": "Tokamak Network <thomas@tokamak.network>",
   "license": "MIT",

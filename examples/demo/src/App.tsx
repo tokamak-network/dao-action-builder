@@ -9,10 +9,6 @@ import {
   type AbiFunction,
   type PredefinedMethod,
 } from '@tokamak-network/dao-action-builder';
-import { registerTokamakMethods } from '@tokamak-network/dao-action-builder-tokamak';
-
-// Register Tokamak methods
-registerTokamakMethods();
 
 function App() {
   // Contract address

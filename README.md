@@ -1,115 +1,186 @@
 # DAO Action Builder
 
-Monorepo for DAO Action Builder - a headless library for building DAO proposal actions.
-
-## Packages
-
-| Package | Description |
-|---------|-------------|
-| [@dao-action-builder/core](./packages/dao-action-builder) | Core library with ABI loading, validation, and encoding |
-| [@dao-action-builder/tokamak](./packages/dao-action-builder-tokamak) | Tokamak Network predefined methods |
-
-## Quick Start
-
-```bash
-# Install dependencies
-pnpm install
-
-# Build all packages
-pnpm build
-
-# Run tests
-pnpm test
-```
+A headless TypeScript library for building DAO proposal actions with Tokamak Network support.
 
 ## Features
 
-- **Etherscan ABI Loading**: Automatically fetch contract ABIs from Etherscan V2 API
-- **Proxy Detection**: Automatic detection of proxy patterns (EIP-1967, implementation(), getImplementation(), logic())
-- **Parameter Validation**: Comprehensive validation for all Solidity types including arrays and tuples
+- **Parameter Validation**: Comprehensive validation for all Solidity types (address, uint, int, bool, bytes, string, arrays, tuples)
 - **Calldata Encoding/Decoding**: Full calldata encoding and decoding using ethers.js
+- **Predefined Methods**: Built-in ABI definitions for common contracts (ERC20, ERC721, ERC1155, etc.)
+- **Tokamak Network**: Built-in support for TON, WTON, DepositManager, SeigManager, and more
 - **React Hooks**: Ready-to-use hooks for React applications
-- **Predefined Methods**: Built-in ABI definitions for common contracts
+- **TypeScript**: Full type safety with comprehensive type definitions
 
-## Usage
-
-### Install
+## Installation
 
 ```bash
-pnpm add @dao-action-builder/core ethers
-
-# For Tokamak Network methods
-pnpm add @dao-action-builder/tokamak
+npm install @tokamak-network/dao-action-builder ethers
 ```
 
-### Basic Usage
+## Quick Start
 
 ```typescript
-import { loadAbi, encodeCalldata, validateParameterType } from '@dao-action-builder/core';
+import {
+  encodeCalldata,
+  decodeCalldata,
+  validateParameterType,
+  predefinedMethodRegistry,
+  erc20Methods,
+  tonMethods,
+} from '@tokamak-network/dao-action-builder';
 
-const config = {
-  etherscan: {
-    apiKey: 'YOUR_API_KEY',
-    chainId: 1,
-  },
-  rpc: {
-    url: 'https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY',
-  },
-};
+// Validate a parameter
+const validation = validateParameterType('0x1234...', 'address');
+if (!validation.isValid) {
+  console.error(validation.error);
+}
 
-// Load ABI
-const abi = await loadAbi('0x...', config);
-
-// Validate parameter
-validateParameterType('["0x123...", "0x456..."]', 'address[]');
-
-// Encode calldata
+// Encode calldata for ERC20 transfer
 const result = encodeCalldata({
-  abi: abi.data.proxyAbi,
+  abi: erc20Methods.abi,
   functionSignature: 'transfer(address,uint256)',
-  parameters: { to: '0x...', amount: '1000' },
+  parameters: {
+    to: '0x742d35Cc6634C0532925a3b844Bc9e7595f5bE21',
+    amount: '1000000000000000000',
+  },
 });
-```
 
-### React Hooks
+if (result.success) {
+  console.log('Calldata:', result.data.calldata);
+}
 
-```tsx
-import { useActionBuilder } from '@dao-action-builder/core/hooks';
-
-function MyComponent() {
-  const { setAddress, availableFunctions, setSelectedFunction, calldata } = useActionBuilder({
-    config,
-  });
-  // ...
+// Decode calldata
+const decoded = decodeCalldata(result.data.calldata, erc20Methods.abi);
+if (decoded.success) {
+  console.log('Function:', decoded.data.functionName);
+  console.log('Parameters:', decoded.data.parameters);
 }
 ```
 
+## Predefined Methods
+
+### Standard Contracts
+
+| Method | Description |
+|--------|-------------|
+| `erc20Methods` | ERC20 token functions (transfer, approve, etc.) |
+| `erc721Methods` | ERC721 NFT functions |
+| `erc1155Methods` | ERC1155 multi-token functions |
+| `ownableMethods` | Ownable contract functions |
+| `accessControlMethods` | AccessControl functions |
+| `pausableMethods` | Pausable contract functions |
+| `governorMethods` | Governor contract functions |
+| `uupsMethods` | UUPS proxy functions |
+
 ### Tokamak Network
 
+| Method | Description |
+|--------|-------------|
+| `tonMethods` | TON token functions |
+| `wtonMethods` | WTON (Wrapped TON) functions |
+| `depositManagerMethods` | Staking deposit management |
+| `seigManagerMethods` | Seigniorage management |
+| `l1BridgeRegistryMethods` | L1 Bridge registry |
+| `layer2ManagerMethods` | Layer 2 management |
+
+All Tokamak methods are automatically registered in the global registry.
+
+## React Hooks
+
+```tsx
+import { useActionBuilder } from '@tokamak-network/dao-action-builder/hooks';
+
+function ActionBuilderComponent() {
+  const {
+    address,
+    setAddress,
+    availableFunctions,
+    selectedFunction,
+    setSelectedFunction,
+    parameterValues,
+    setParameterValue,
+    calldata,
+    isParametersValid,
+    buildAction,
+  } = useActionBuilder({
+    abi: erc20Methods.abi,
+  });
+
+  return (
+    // Your UI here
+  );
+}
+```
+
+## API Reference
+
+### Validation
+
 ```typescript
-import { registerTokamakMethods, tokamakMethods } from '@dao-action-builder/tokamak';
+// Validate any Solidity type
+validateParameterType(value: string, type: string): ParameterValidationResult
 
-// Register with global registry
-registerTokamakMethods();
+// Type-specific validators
+validateAddress(value: string): ParameterValidationResult
+validateUint(value: string, bits?: number): ParameterValidationResult
+validateInt(value: string, bits?: number): ParameterValidationResult
+validateBool(value: string): ParameterValidationResult
+validateBytes(value: string, size?: number): ParameterValidationResult
+validateString(value: string): ParameterValidationResult
+validateArray(value: string, elementType: string): ParameterValidationResult
+validateTuple(value: string, components: AbiParameter[]): ParameterValidationResult
+```
 
-// Or use directly
-import { depositManagerMethods } from '@dao-action-builder/tokamak';
+### Calldata
+
+```typescript
+// Encode function call to calldata
+encodeCalldata(options: {
+  abi: AbiFunction[];
+  functionSignature: string;
+  parameters: Record<string, string | ParameterValue>;
+}): Result<EncodeCalldataResult>
+
+// Decode calldata back to parameters
+decodeCalldata(
+  calldata: string,
+  abi: AbiFunction[]
+): Result<DecodeCalldataResult>
+```
+
+### Action Builder
+
+```typescript
+// Build a complete action object
+buildAction(input: {
+  contractAddress: string;
+  abi: AbiFunction[];
+  functionSignature: string;
+  parameters: Record<string, string | ParameterValue>;
+  value?: bigint;
+}): Result<Action>
 ```
 
 ## Development
 
 ```bash
-# Install dependencies
-pnpm install
+# Clone the repository
+git clone https://github.com/tokamak-network/dao-action-builder.git
+cd dao-action-builder
 
-# Build all packages
-pnpm build
+# Install dependencies
+npm install
+
+# Build
+npm run build
 
 # Run tests
-pnpm test
+npm test
 
-# Clean build artifacts
-pnpm clean
+# Run demo app
+cd examples/demo
+npm install
+npm run dev
 ```
 
 ## License

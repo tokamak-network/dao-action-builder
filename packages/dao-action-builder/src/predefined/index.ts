@@ -7,6 +7,7 @@ import { accessControlMethods } from './access-control';
 import { pausableMethods } from './pausable';
 import { governorMethods } from './governor';
 import { uupsMethods } from './uups';
+import { tokamakMethods } from './tokamak';
 
 /**
  * Registry for predefined contract methods
@@ -29,6 +30,7 @@ export class PredefinedMethodRegistry {
       pausableMethods,
       governorMethods,
       uupsMethods,
+      ...tokamakMethods,
     ];
 
     for (const method of builtInMethods) {
@@ -116,3 +118,14 @@ export { accessControlMethods } from './access-control';
 export { pausableMethods } from './pausable';
 export { governorMethods } from './governor';
 export { uupsMethods } from './uups';
+
+// Tokamak Network methods
+export {
+  tokamakMethods,
+  tonMethods,
+  wtonMethods,
+  depositManagerMethods,
+  seigManagerMethods,
+  l1BridgeRegistryMethods,
+  layer2ManagerMethods,
+} from './tokamak';

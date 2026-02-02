@@ -1,4 +1,4 @@
-import type { PredefinedMethod, AbiFunction } from '@dao-action-builder/core';
+import type { PredefinedMethod, AbiFunction } from '../../types';
 
 const abi: AbiFunction[] = [
   {

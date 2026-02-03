@@ -1,4 +1,4 @@
-# @dao-action-builder/core
+# @tokamak-ecosystem/dao-action-builder
 
 Headless library for building DAO proposal actions - smart contract function calls with ABI loading, parameter validation, and calldata encoding.
 
@@ -12,11 +12,11 @@ Headless library for building DAO proposal actions - smart contract function cal
 ## Installation
 
 ```bash
-npm install @dao-action-builder/core ethers
+npm install @tokamak-ecosystem/dao-action-builder ethers
 # or
-pnpm add @dao-action-builder/core ethers
+pnpm add @tokamak-ecosystem/dao-action-builder ethers
 # or
-yarn add @dao-action-builder/core ethers
+yarn add @tokamak-ecosystem/dao-action-builder ethers
 ```
 
 ## Quick Start
@@ -29,7 +29,7 @@ import {
   decodeCalldata,
   validateParameterType,
   erc20Methods,
-} from '@dao-action-builder/core';
+} from '@tokamak-ecosystem/dao-action-builder';
 
 // Validate parameters
 const validation = validateParameterType(
@@ -69,8 +69,8 @@ if (decodeResult.success) {
 ### React Hooks
 
 ```tsx
-import { useActionBuilder } from '@dao-action-builder/core/hooks';
-import { erc20Methods } from '@dao-action-builder/core';
+import { useActionBuilder } from '@tokamak-ecosystem/dao-action-builder/hooks';
+import { erc20Methods } from '@tokamak-ecosystem/dao-action-builder';
 
 function ActionBuilderForm() {
   const {
@@ -130,7 +130,7 @@ import {
   predefinedMethodRegistry,
   buildActionFromPredefined,
   erc20Methods,
-} from '@dao-action-builder/core';
+} from '@tokamak-ecosystem/dao-action-builder';
 
 // Get all predefined methods
 const allMethods = predefinedMethodRegistry.getAll();

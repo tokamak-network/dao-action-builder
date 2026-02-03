@@ -1,6 +1,7 @@
 import type { PredefinedMethod, AbiFunction } from '../../types';
 
 const abi: AbiFunction[] = [
+  // onlyOwner functions
   {
     type: 'function',
     name: 'setAddresses',
@@ -19,6 +20,7 @@ const abi: AbiFunction[] = [
     outputs: [],
     stateMutability: 'nonpayable',
   },
+  // onlySeigniorageCommittee functions (DAOCommitteeProxy can call these)
   {
     type: 'function',
     name: 'rejectCandidateAddOn',
@@ -33,6 +35,56 @@ const abi: AbiFunction[] = [
       { name: 'rollupConfig', type: 'address' },
       { name: 'rejectedL2Deposit', type: 'bool' },
     ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  // Access control functions (inherited from AuthControlL1BridgeRegistry)
+  {
+    type: 'function',
+    name: 'addAdmin',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'removeAdmin',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'transferAdmin',
+    inputs: [{ name: 'newAdmin', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'addManager',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'removeManager',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'revokeManager',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'revokeRegistrant',
+    inputs: [{ name: 'account', type: 'address' }],
     outputs: [],
     stateMutability: 'nonpayable',
   },

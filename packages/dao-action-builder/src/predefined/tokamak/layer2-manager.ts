@@ -31,6 +31,28 @@ const abi: AbiFunction[] = [
     outputs: [],
     stateMutability: 'nonpayable',
   },
+  // Access control functions (inherited from AccessibleCommon)
+  {
+    type: 'function',
+    name: 'addAdmin',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'removeAdmin',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'transferAdmin',
+    inputs: [{ name: 'newAdmin', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
 ];
 
 export const layer2ManagerMethods: PredefinedMethod = {

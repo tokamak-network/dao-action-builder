@@ -3,22 +3,18 @@ import type { PredefinedMethod, AbiFunction } from '../../types';
 const abi: AbiFunction[] = [
   {
     type: 'function',
-    name: 'setMinDepositGasLimit',
-    inputs: [{ name: 'gasLimit_', type: 'uint32' }],
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    name: 'setAddresses',
+    name: 'setAddress',
     inputs: [
-      { name: '_l1BridgeRegistry', type: 'address' },
-      { name: '_layer2Manager', type: 'address' },
+      { name: '_depositManager', type: 'address' },
+      { name: '_daoCommittee', type: 'address' },
+      { name: '_candidateImp', type: 'address' },
+      { name: '_ton', type: 'address' },
+      { name: '_wton', type: 'address' },
     ],
     outputs: [],
     stateMutability: 'nonpayable',
   },
-  // Access control functions (inherited from AccessibleCommon)
+  // Access control functions
   {
     type: 'function',
     name: 'addAdmin',
@@ -42,13 +38,13 @@ const abi: AbiFunction[] = [
   },
 ];
 
-export const depositManagerMethods: PredefinedMethod = {
-  id: 'tokamak-deposit-manager',
-  name: 'Tokamak DepositManager',
-  description: 'Tokamak Network DepositManager (V1.1) for TON staking deposits',
+export const candidateFactoryMethods: PredefinedMethod = {
+  id: 'tokamak-candidate-factory',
+  name: 'Tokamak CandidateFactory',
+  description: 'Tokamak Network CandidateFactory for deploying candidate contracts',
   abi,
   addresses: {
-    mainnet: '0x0b58ca72b12f01fc05f8f252e226f3e2089bd00e',
-    sepolia: '0x90ffcc7F168DceDBEF1Cb6c6eB00cA73F922956F',
+    mainnet: '0x9fc7100a16407ee24a79c834a56e6eca555a5d7c',
+    sepolia: '0xD05e3E7dD18C3a87dC1bf5cbA16B73C28Ab45080',
   },
 };

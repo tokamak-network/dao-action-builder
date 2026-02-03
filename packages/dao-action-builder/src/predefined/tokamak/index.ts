@@ -11,6 +11,8 @@ import { daoCommitteeMethods } from './dao-committee';
 import { daoAgendaManagerMethods } from './dao-agenda-manager';
 import { daoVaultMethods } from './dao-vault';
 import { layer2RegistryMethods } from './layer2-registry';
+import { seigManagerMethods } from './seig-manager';
+import { candidateFactoryMethods } from './candidate-factory';
 
 // Export individual methods
 export { tonMethods } from './ton';
@@ -22,6 +24,8 @@ export { daoCommitteeMethods } from './dao-committee';
 export { daoAgendaManagerMethods } from './dao-agenda-manager';
 export { daoVaultMethods } from './dao-vault';
 export { layer2RegistryMethods } from './layer2-registry';
+export { seigManagerMethods } from './seig-manager';
+export { candidateFactoryMethods } from './candidate-factory';
 
 /**
  * All Tokamak predefined methods
@@ -36,6 +40,8 @@ export const tokamakMethods: PredefinedMethod[] = [
   daoAgendaManagerMethods,
   daoVaultMethods,
   layer2RegistryMethods,
+  seigManagerMethods,
+  candidateFactoryMethods,
 ];
 
 /**

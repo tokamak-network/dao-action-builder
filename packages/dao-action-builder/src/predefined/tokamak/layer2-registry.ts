@@ -8,12 +8,62 @@ const abi: AbiFunction[] = [
     outputs: [],
     stateMutability: 'nonpayable',
   },
+  // Access control functions (inherited from AuthControlCoinage)
+  {
+    type: 'function',
+    name: 'addAdmin',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'removeAdmin',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'transferAdmin',
+    inputs: [{ name: 'newAdmin', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'addMinter',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'removeMinter',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'addOperator',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'removeOperator',
+    inputs: [{ name: 'account', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
 ];
 
 export const layer2RegistryMethods: PredefinedMethod = {
   id: 'tokamak-layer2-registry',
   name: 'Tokamak Layer2Registry',
-  description: 'Tokamak Network Layer2 Registry for unregistering Layer2 networks',
+  description: 'Tokamak Network Layer2 Registry for managing Layer2 registrations',
   abi,
   addresses: {
     mainnet: '0x7846c2248a7b4de77e9c2bae7fbb93bfc286837b',

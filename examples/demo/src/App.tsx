@@ -12,6 +12,8 @@ import {
   l1BridgeRegistryMethods,
   layer2ManagerMethods,
   layer2RegistryMethods,
+  seigManagerMethods,
+  candidateFactoryMethods,
   type AbiFunction,
   type PredefinedMethod,
   type NetworkType,
@@ -26,6 +28,8 @@ const DAO_CONTRACTS: PredefinedMethod[] = [
   l1BridgeRegistryMethods,
   layer2ManagerMethods,
   layer2RegistryMethods,
+  seigManagerMethods,
+  candidateFactoryMethods,
 ];
 
 // Theme toggle hook

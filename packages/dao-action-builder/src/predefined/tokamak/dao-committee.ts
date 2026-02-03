@@ -1,6 +1,7 @@
 import type { PredefinedMethod, AbiFunction } from '../../types';
 
 const abi: AbiFunction[] = [
+  // Existing functions
   {
     type: 'function',
     name: 'removeFromBlacklist',
@@ -37,6 +38,131 @@ const abi: AbiFunction[] = [
       { name: '_status', type: 'uint256' },
       { name: '_result', type: 'uint256' },
     ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  // New functions from analysis
+  {
+    type: 'function',
+    name: 'setSeigManager',
+    inputs: [{ name: '_seigManager', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setCandidatesSeigManager',
+    inputs: [
+      { name: '_candidateContracts', type: 'address[]' },
+      { name: '_seigManager', type: 'address' },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setCandidatesCommittee',
+    inputs: [
+      { name: '_candidateContracts', type: 'address[]' },
+      { name: '_committee', type: 'address' },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setDaoVault',
+    inputs: [{ name: '_daoVault', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setLayer2Registry',
+    inputs: [{ name: '_layer2Registry', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setAgendaManager',
+    inputs: [{ name: '_agendaManager', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setCandidateFactory',
+    inputs: [{ name: '_candidateFactory', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setTon',
+    inputs: [{ name: '_ton', type: 'address' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setActivityRewardPerSecond',
+    inputs: [{ name: '_value', type: 'uint256' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'increaseMaxMember',
+    inputs: [
+      { name: '_newMaxMember', type: 'uint256' },
+      { name: '_quorum', type: 'uint256' },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'decreaseMaxMember',
+    inputs: [
+      { name: '_reducingMemberIndex', type: 'uint256' },
+      { name: '_quorum', type: 'uint256' },
+    ],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setQuorum',
+    inputs: [{ name: '_quorum', type: 'uint256' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setCreateAgendaFees',
+    inputs: [{ name: '_fees', type: 'uint256' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setMinimumNoticePeriodSeconds',
+    inputs: [{ name: '_minimumNoticePeriod', type: 'uint256' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setMinimumVotingPeriodSeconds',
+    inputs: [{ name: '_minimumVotingPeriod', type: 'uint256' }],
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    name: 'setExecutingPeriodSeconds',
+    inputs: [{ name: '_executingPeriodSeconds', type: 'uint256' }],
     outputs: [],
     stateMutability: 'nonpayable',
   },

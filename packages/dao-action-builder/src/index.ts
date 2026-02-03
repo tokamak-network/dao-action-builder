@@ -93,6 +93,8 @@ export {
   daoAgendaManagerMethods,
   daoVaultMethods,
   layer2RegistryMethods,
+  seigManagerMethods,
+  candidateFactoryMethods,
 } from './predefined';
 
 // React Hooks

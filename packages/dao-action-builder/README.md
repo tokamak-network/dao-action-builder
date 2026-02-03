@@ -4,8 +4,6 @@ Headless library for building DAO proposal actions - smart contract function cal
 
 ## Features
 
-- **Etherscan ABI Loading**: Automatically fetch contract ABIs from Etherscan API
-- **Proxy Detection**: Automatic detection of proxy patterns (EIP-1967, implementation(), getImplementation(), logic())
 - **Parameter Validation**: Comprehensive validation for all Solidity types including arrays and tuples
 - **Calldata Encoding/Decoding**: Full calldata encoding and decoding using ethers.js
 - **React Hooks**: Ready-to-use hooks for React applications
@@ -27,31 +25,11 @@ yarn add @dao-action-builder/core ethers
 
 ```typescript
 import {
-  loadAbi,
   encodeCalldata,
   decodeCalldata,
   validateParameterType,
-  buildAction,
+  erc20Methods,
 } from '@dao-action-builder/core';
-
-// Configuration
-const config = {
-  etherscan: {
-    apiKey: 'YOUR_ETHERSCAN_API_KEY',
-    chainId: 1,
-  },
-  rpc: {
-    url: 'https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY',
-  },
-};
-
-// Load ABI from Etherscan
-const abiResult = await loadAbi('0xContractAddress', config);
-if (abiResult.success) {
-  console.log('Proxy ABI:', abiResult.data.proxyAbi);
-  console.log('Logic ABI:', abiResult.data.logicAbi);
-  console.log('Is Proxy:', abiResult.data.isProxy);
-}
 
 // Validate parameters
 const validation = validateParameterType(
@@ -68,7 +46,7 @@ const arrayValidation = validateParameterType(
 
 // Encode calldata
 const encodeResult = encodeCalldata({
-  abi: abiResult.data.proxyAbi,
+  abi: erc20Methods.abi,
   functionSignature: 'transfer(address,uint256)',
   parameters: {
     to: '0x1234567890123456789012345678901234567890',
@@ -86,29 +64,16 @@ if (decodeResult.success) {
   console.log('Function:', decodeResult.data.functionName);
   console.log('Parameters:', decodeResult.data.parameters);
 }
-
-// Build complete action
-const action = await buildAction(
-  {
-    contractAddress: '0xContractAddress',
-    functionSignature: 'transfer(address,uint256)',
-    parameters: { to: '0x...', amount: '1000' },
-  },
-  config
-);
 ```
 
 ### React Hooks
 
 ```tsx
 import { useActionBuilder } from '@dao-action-builder/core/hooks';
+import { erc20Methods } from '@dao-action-builder/core';
 
 function ActionBuilderForm() {
   const {
-    address,
-    setAddress,
-    isLoadingAbi,
-    abiError,
     availableFunctions,
     selectedFunction,
     setSelectedFunction,
@@ -119,23 +84,11 @@ function ActionBuilderForm() {
     canBuildAction,
     buildAction,
   } = useActionBuilder({
-    config: {
-      etherscan: { apiKey: 'KEY', chainId: 1 },
-      rpc: { url: 'https://...' },
-    },
+    abi: erc20Methods.abi,
   });
 
   return (
     <div>
-      <input
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        placeholder="Contract Address"
-      />
-
-      {isLoadingAbi && <p>Loading ABI...</p>}
-      {abiError && <p>Error: {abiError.message}</p>}
-
       <select
         value={selectedFunction?.name || ''}
         onChange={(e) => setSelectedFunction(e.target.value)}
@@ -185,7 +138,7 @@ const allMethods = predefinedMethodRegistry.getAll();
 // Get specific method
 const erc20 = predefinedMethodRegistry.get('erc20');
 
-// Build action using predefined ABI (no Etherscan needed)
+// Build action using predefined ABI
 const action = buildActionFromPredefined(
   {
     contractAddress: '0xTokenAddress',
@@ -218,15 +171,6 @@ predefinedMethodRegistry.register({
 ## API Reference
 
 ### Core Functions
-
-#### `loadAbi(address, config)`
-
-Load contract ABI from Etherscan with automatic proxy detection.
-
-```typescript
-const result = await loadAbi('0x...', config);
-// Returns: Result<LoadAbiResult, ActionBuilderError>
-```
 
 #### `encodeCalldata(options)`
 
@@ -267,10 +211,6 @@ const result = validateParameterType('123', 'uint256');
 
 ### React Hooks
 
-#### `useAbiLoader(options)`
-
-Hook for loading contract ABIs.
-
 #### `useParameterValidation(options)`
 
 Hook for managing parameter input and validation.
@@ -278,11 +218,6 @@ Hook for managing parameter input and validation.
 #### `useActionBuilder(options)`
 
 Complete hook for the action builder workflow.
-
-## Packages
-
-- `@dao-action-builder/core` - Core library
-- `@dao-action-builder/tokamak` - Tokamak Network predefined methods
 
 ## License
 

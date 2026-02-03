@@ -21,6 +21,22 @@ Self-governance functions for the DAO Committee.
 | `createCandidateOwner(string _memo, address _operatorAddress)` | Create a candidate by owner |
 | `registerLayer2CandidateByOwner(address _operator, address _layer2, string _memo)` | Register Layer2 candidate by owner |
 | `setAgendaStatus(uint256 _agendaID, uint256 _status, uint256 _result)` | Manually set agenda status and result |
+| `setSeigManager(address _seigManager)` | Set the SeigManager contract address |
+| `setCandidatesSeigManager(address[] _candidateContracts, address _seigManager)` | Set SeigManager for multiple candidates |
+| `setCandidatesCommittee(address[] _candidateContracts, address _committee)` | Set committee for multiple candidates |
+| `setDaoVault(address _daoVault)` | Set the DAO Vault address |
+| `setLayer2Registry(address _layer2Registry)` | Set the Layer2 Registry address |
+| `setAgendaManager(address _agendaManager)` | Set the Agenda Manager address |
+| `setCandidateFactory(address _candidateFactory)` | Set the Candidate Factory address |
+| `setTon(address _ton)` | Set the TON token address |
+| `setActivityRewardPerSecond(uint256 _value)` | Set activity reward rate per second |
+| `increaseMaxMember(uint256 _newMaxMember, uint256 _quorum)` | Increase maximum member count |
+| `decreaseMaxMember(uint256 _reducingMemberIndex, uint256 _quorum)` | Decrease maximum member count |
+| `setQuorum(uint256 _quorum)` | Set voting quorum |
+| `setCreateAgendaFees(uint256 _fees)` | Set agenda creation fees |
+| `setMinimumNoticePeriodSeconds(uint256 _minimumNoticePeriod)` | Set minimum notice period |
+| `setMinimumVotingPeriodSeconds(uint256 _minimumVotingPeriod)` | Set minimum voting period |
+| `setExecutingPeriodSeconds(uint256 _executingPeriodSeconds)` | Set execution period |
 
 ---
 
@@ -71,6 +87,103 @@ Manages the DAO treasury.
 
 ---
 
+### TON
+
+Tokamak Network native token.
+
+| Network | Address |
+|---------|---------|
+| Mainnet | `0x2be5e8c109e2197D077D13A82dAead6a9b3433C5` |
+| Sepolia | `0xa30fe40285B8f5c0457DbC3B7C8A280373c40044` |
+
+| Function | Description |
+|----------|-------------|
+| `approve(address spender, uint256 amount)` | Approve token spending |
+| `approveAndCall(address spender, uint256 amount, bytes data)` | Approve and call in single transaction |
+| `transfer(address to, uint256 amount)` | Transfer tokens |
+| `transferFrom(address from, address to, uint256 amount)` | Transfer tokens on behalf of another address |
+
+---
+
+### WTON
+
+Wrapped TON token with swap functionality.
+
+| Network | Address |
+|---------|---------|
+| Mainnet | `0xc4A11aaf6ea915Ed7Ac194161d2fC9384F15bff2` |
+| Sepolia | `0x79E0d92670106c85E9067b56B8F674340dCa0Bbd` |
+
+| Function | Description |
+|----------|-------------|
+| `swapToTON(uint256 wtonAmount)` | Swap WTON to TON |
+| `swapFromTON(uint256 tonAmount)` | Swap TON to WTON |
+| `swapToTONAndTransfer(address to, uint256 wtonAmount)` | Swap WTON to TON and transfer |
+| `swapFromTONAndTransfer(address to, uint256 tonAmount)` | Swap TON to WTON and transfer |
+| `approve(address spender, uint256 amount)` | Approve token spending |
+| `approveAndCall(address spender, uint256 amount, bytes data)` | Approve and call in single transaction |
+| `transfer(address to, uint256 amount)` | Transfer tokens |
+| `transferFrom(address from, address to, uint256 amount)` | Transfer tokens on behalf of another address |
+| `addMinter(address account)` | Add minter role |
+| `decreaseAllowance(address spender, uint256 subtractedValue)` | Decrease spending allowance |
+| `increaseAllowance(address spender, uint256 addedValue)` | Increase spending allowance |
+| `transferOwnership(address target, address newOwner)` | Transfer ownership of target contract |
+
+---
+
+### SeigManager
+
+Manages seigniorage distribution for staking.
+
+| Network | Address |
+|---------|---------|
+| Mainnet | `0x0b55a0f463b6defb81c6063973763951712d0e5f` |
+| Sepolia | `0x11F6f1C2c0800AC1b31F04fF8A9f5D9003a85460` |
+
+**Configuration Functions:**
+
+| Function | Description |
+|----------|-------------|
+| `setData(address powerton_, address daoAddress, uint256 powerTONSeigRate_, uint256 daoSeigRate_, uint256 relativeSeigRate_, uint256 adjustDelay_, uint256 minimumAmount_)` | Set all seigniorage parameters |
+| `setPowerTON(address powerton_)` | Set PowerTON address |
+| `setDao(address daoAddress)` | Set DAO address |
+| `setPowerTONSeigRate(uint256 powerTONSeigRate_)` | Set PowerTON seigniorage rate |
+| `setDaoSeigRate(uint256 daoSeigRate_)` | Set DAO seigniorage rate |
+| `setPseigRate(uint256 pseigRate_)` | Set relative seigniorage rate |
+| `setCoinageFactory(address factory_)` | Set coinage factory address |
+| `setAdjustDelay(uint256 adjustDelay_)` | Set adjustment delay |
+| `setMinimumAmount(uint256 minimumAmount_)` | Set minimum amount |
+| `setSeigStartBlock(uint256 _seigStartBlock)` | Set seigniorage start block |
+| `setInitialTotalSupply(uint256 _initialTotalSupply)` | Set initial total supply |
+| `setBurntAmountAtDAO(uint256 _burntAmountAtDAO)` | Set burnt amount at DAO |
+
+**Ownership Functions:**
+
+| Function | Description |
+|----------|-------------|
+| `transferCoinageOwnership(address newSeigManager, address[] coinages_)` | Transfer coinage ownership to new SeigManager |
+| `renounceWTONMinter()` | Renounce WTON minter role |
+| `renounceMinter(address target)` | Renounce minter role on target contract |
+| `renouncePauser(address target)` | Renounce pauser role on target contract |
+| `renounceOwnership(address target)` | Renounce ownership of target contract |
+| `transferOwnership(address target, address newOwner)` | Transfer ownership of target contract |
+
+**Access Control Functions:**
+
+| Function | Description |
+|----------|-------------|
+| `addAdmin(address account)` | Add admin role |
+| `removeAdmin(address account)` | Remove admin role |
+| `transferAdmin(address newAdmin)` | Transfer admin role |
+| `addMinter(address account)` | Add minter role |
+| `removeMinter(address account)` | Remove minter role |
+| `addOperator(address account)` | Add operator role |
+| `removeOperator(address account)` | Remove operator role |
+| `addChallenger(address account)` | Add challenger role |
+| `removeChallenger(address account)` | Remove challenger role |
+
+---
+
 ### DepositManager
 
 Manages staking deposits.
@@ -84,6 +197,9 @@ Manages staking deposits.
 |----------|-------------|
 | `setMinDepositGasLimit(uint32 gasLimit_)` | Set minimum gas limit for deposits |
 | `setAddresses(address _l1BridgeRegistry, address _layer2Manager)` | Set contract addresses |
+| `addAdmin(address account)` | Add admin role |
+| `removeAdmin(address account)` | Remove admin role |
+| `transferAdmin(address newAdmin)` | Transfer admin role |
 
 ---
 
@@ -96,12 +212,26 @@ Manages L1 bridges and candidate add-ons.
 | Mainnet | `0x39d43281A4A5e922AB0DCf89825D73273D8C5BA4` |
 | Sepolia | `0x2D47fa57101203855b336e9E61BC9da0A6dd0Dbc` |
 
-| Function | Access | Description |
-|----------|--------|-------------|
-| `setAddresses(address _layer2Manager, address _seigManager, address _ton)` | onlyOwner | Set contract addresses |
-| `setSeigniorageCommittee(address _seigniorageCommittee)` | onlyOwner | Set seigniorage committee address |
-| `rejectCandidateAddOn(address rollupConfig)` | onlySeigniorageCommittee | Reject a candidate add-on |
-| `restoreCandidateAddOn(address rollupConfig, bool rejectedL2Deposit)` | onlySeigniorageCommittee | Restore a rejected candidate add-on |
+**Configuration Functions:**
+
+| Function | Description |
+|----------|-------------|
+| `setAddresses(address _layer2Manager, address _seigManager, address _ton)` | Set contract addresses |
+| `setSeigniorageCommittee(address _seigniorageCommittee)` | Set seigniorage committee address |
+| `rejectCandidateAddOn(address rollupConfig)` | Reject a candidate add-on |
+| `restoreCandidateAddOn(address rollupConfig, bool rejectedL2Deposit)` | Restore a rejected candidate add-on |
+
+**Access Control Functions:**
+
+| Function | Description |
+|----------|-------------|
+| `addAdmin(address account)` | Add admin role |
+| `removeAdmin(address account)` | Remove admin role |
+| `transferAdmin(address newAdmin)` | Transfer admin role |
+| `addManager(address account)` | Add manager role |
+| `removeManager(address account)` | Remove manager role |
+| `revokeManager(address account)` | Revoke manager role |
+| `revokeRegistrant(address account)` | Revoke registrant role |
 
 ---
 
@@ -119,6 +249,9 @@ Manages Layer 2 networks.
 | `setAddresses(address _l1BridgeRegistry, address _operatorManagerFactory, address _ton, address _wton, address _dao, address _depositManager, address _seigManager, address _swapProxy)` | Set all contract addresses |
 | `setOperatorManagerFactory(address _operatorManagerFactory)` | Set operator manager factory |
 | `setMinimumInitialDepositAmount(uint256 _minimumInitialDepositAmount)` | Set minimum initial deposit amount |
+| `addAdmin(address account)` | Add admin role |
+| `removeAdmin(address account)` | Remove admin role |
+| `transferAdmin(address newAdmin)` | Transfer admin role |
 
 ---
 
@@ -134,23 +267,34 @@ Manages Layer 2 registration.
 | Function | Description |
 |----------|-------------|
 | `unregister(address layer2)` | Unregister a Layer 2 network |
+| `addAdmin(address account)` | Add admin role |
+| `removeAdmin(address account)` | Remove admin role |
+| `transferAdmin(address newAdmin)` | Transfer admin role |
+| `addMinter(address account)` | Add minter role |
+| `removeMinter(address account)` | Remove minter role |
+| `addOperator(address account)` | Add operator role |
+| `removeOperator(address account)` | Remove operator role |
 
 ---
 
-## Contracts NOT Controllable by DAO
+### CandidateFactory
 
-| Contract | Reason |
-|----------|--------|
-| SeigManagerProxy | DAOCommitteeProxy has DEFAULT_ADMIN_ROLE but not PAUSER_ROLE |
-| Candidate contracts | Each Candidate is owned by its operator |
-| TON / WTON | Token contracts with separate ownership |
+Factory contract for deploying candidate contracts.
 
-## Reference
+| Network | Address |
+|---------|---------|
+| Mainnet | `0x9fc7100a16407ee24a79c834a56e6eca555a5d7c` |
+| Sepolia | `0x04e3C2B720FB8896A7f9Ea59DdcA85fD45189C7f` |
 
-- [Mainnet Deployed Addresses](https://github.com/tokamak-network/ton-staking-v2/blob/ton-staking-v2/docs/deployed-addresses-mainnet.md)
-- [Sepolia Deployed Addresses](https://github.com/tokamak-network/ton-staking-v2/blob/ton-staking-v2/docs/deployed-addresses-sepolia.md)
-- [ton-staking-v2 Repository](https://github.com/tokamak-network/ton-staking-v2)
-- [tokamak-dao-contracts Repository](https://github.com/tokamak-network/tokamak-dao-contracts)
+| Function | Description |
+|----------|-------------|
+| `setAddress(address _depositManager, address _daoCommittee, address _candidateImp, address _ton, address _wton)` | Set all contract addresses |
+| `addAdmin(address account)` | Add admin role |
+| `removeAdmin(address account)` | Remove admin role |
+| `transferAdmin(address newAdmin)` | Transfer admin role |
+
+---
+
 
 ## License
 

@@ -65,3 +65,13 @@ Release Guidelines
 Default to Patch: Always use `pnpm release:patch` unless explicitly instructed otherwise
 Version Types: patch (bug fixes), minor (new features), major (breaking changes)
 Auto-confirm: Use `echo "y" | pnpm release:patch` to auto-confirm the release prompt
+
+
+README Synchronization
+
+The root `README.md` is the source of truth for documentation.
+When updating README, always sync to `packages/dao-action-builder/README.md`:
+```bash
+cp README.md packages/dao-action-builder/README.md
+```
+This ensures npm package documentation stays in sync with the repository.

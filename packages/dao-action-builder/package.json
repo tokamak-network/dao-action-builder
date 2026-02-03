@@ -1,5 +1,5 @@
 {
-  "name": "@tokamak-network/dao-action-builder",
+  "name": "@tokamak-ecosystem/dao-action-builder",
   "version": "0.1.0",
   "description": "Headless library for building DAO proposal actions with Tokamak Network support - smart contract function calls with parameter validation and calldata encoding",
   "main": "./dist/index.js",

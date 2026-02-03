@@ -13,6 +13,8 @@ export type {
   DecodeCalldataResult,
   BuildActionInput,
   PredefinedMethod,
+  NetworkType,
+  ContractAddresses,
 } from './types';
 
 export { ActionBuilderError, ActionBuilderErrorCode } from './types';

@@ -25,4 +25,8 @@ export const depositManagerMethods: PredefinedMethod = {
   name: 'Tokamak DepositManager',
   description: 'Tokamak Network DepositManager (V1.1) for TON staking deposits',
   abi,
+  addresses: {
+    mainnet: '0x0b58ca72b12f01fc05f8f252e226f3e2089bd00e',
+    sepolia: '0x90ffcc7F168DceDBEF1Cb6c6eB00cA73F922956F',
+  },
 };

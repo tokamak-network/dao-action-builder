@@ -84,4 +84,8 @@ export const daoVaultMethods: PredefinedMethod = {
   name: 'Tokamak DAOVault',
   description: 'Tokamak Network DAO Vault for treasury management',
   abi,
+  addresses: {
+    mainnet: '0x2520CD65BAa2cEEe9E6Ad6EBD3F45490C42dd303',
+    sepolia: '0xB9F6c9E75418D7E5a536ADe08f0218196BB3eBa4',
+  },
 };

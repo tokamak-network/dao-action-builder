@@ -43,4 +43,8 @@ export const l1BridgeRegistryMethods: PredefinedMethod = {
   name: 'Tokamak L1BridgeRegistry',
   description: 'Tokamak Network L1BridgeRegistry (V1.1) for managing L1 bridges',
   abi,
+  addresses: {
+    mainnet: '0x39d43281A4A5e922AB0DCf89825D73273D8C5BA4',
+    sepolia: '0x2D47fa57101203855b336e9E61BC9da0A6dd0Dbc',
+  },
 };

@@ -38,4 +38,8 @@ export const layer2ManagerMethods: PredefinedMethod = {
   name: 'Tokamak Layer2Manager',
   description: 'Tokamak Network Layer2Manager (V1.1) for managing Layer2 networks',
   abi,
+  addresses: {
+    mainnet: '0xD6Bf6B2b7553c8064Ba763AD6989829060FdFC1D',
+    sepolia: '0x58B4C2FEf19f5CDdd944AadD8DC99cCC71bfeFDc',
+  },
 };

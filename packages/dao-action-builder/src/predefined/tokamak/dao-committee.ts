@@ -47,4 +47,8 @@ export const daoCommitteeMethods: PredefinedMethod = {
   name: 'Tokamak DAOCommittee',
   description: 'Tokamak Network DAO Committee for governance management',
   abi,
+  addresses: {
+    mainnet: '0xDD9f0cCc044B0781289Ee318e5971b0139602C26',
+    sepolia: '0x79cfbEaCB5470bBe3B8Fe76db2A61Fc59e588C38',
+  },
 };

@@ -101,4 +101,8 @@ export const daoAgendaManagerMethods: PredefinedMethod = {
   name: 'Tokamak DAOAgendaManager',
   description: 'Tokamak Network DAO Agenda Manager for proposal management',
   abi,
+  addresses: {
+    mainnet: '0xcD4421d082752f363E1687544a09d5112cD4f484',
+    sepolia: '0x1444f7a8bC26a3c9001a13271D56d6fF36B44f08',
+  },
 };

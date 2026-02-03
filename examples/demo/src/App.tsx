@@ -14,46 +14,29 @@ import {
   layer2RegistryMethods,
   type AbiFunction,
   type PredefinedMethod,
-} from '@tokamak-network/dao-action-builder';
+  type NetworkType,
+} from '@tokamak-ecosystem/dao-action-builder';
 
-// Contracts controllable by DAOCommitteeProxy with mainnet addresses
-const DAO_CONTRACTS: Array<PredefinedMethod & { address: string }> = [
-  {
-    ...daoCommitteeMethods,
-    address: '0xDD9f0cCc044B0781289Ee318e5971b0139602C26',
-  },
-  {
-    ...daoAgendaManagerMethods,
-    address: '0xcD4421d082752f363E1687544a09d5112cD4f484',
-  },
-  {
-    ...daoVaultMethods,
-    address: '0x2520CD65BAa2cEEe9E6Ad6EBD3F45490C42dd303',
-  },
-  {
-    ...depositManagerMethods,
-    address: '0x0b58ca72b12f01fc05f8f252e226f3e2089bd00e',
-  },
-  {
-    ...l1BridgeRegistryMethods,
-    address: '0x39d43281A4A5e922AB0DCf89825D73273D8C5BA4',
-  },
-  {
-    ...layer2ManagerMethods,
-    address: '0xD6Bf6B2b7553c8064Ba763AD6989829060FdFC1D',
-  },
-  {
-    ...layer2RegistryMethods,
-    address: '0x7846c2248a7b4de77e9c2bae7fbb93bfc286837b',
-  },
+// Contracts controllable by DAOCommitteeProxy
+const DAO_CONTRACTS: PredefinedMethod[] = [
+  daoCommitteeMethods,
+  daoAgendaManagerMethods,
+  daoVaultMethods,
+  depositManagerMethods,
+  l1BridgeRegistryMethods,
+  layer2ManagerMethods,
+  layer2RegistryMethods,
 ];
 
 function App() {
+  // Network selection
+  const [network, setNetwork] = useState<NetworkType>('mainnet');
+
   // Contract address
   const [contractAddress, setContractAddress] = useState('');
 
   // Predefined methods
-  const [selectedPredefined, setSelectedPredefined] = useState<(PredefinedMethod & { address: string }) | null>(null);
+  const [selectedPredefined, setSelectedPredefined] = useState<PredefinedMethod | null>(null);
 
   // Function selection
   const [selectedFunction, setSelectedFunction] = useState<AbiFunction | null>(null);
@@ -76,15 +59,27 @@ function App() {
     return [];
   }, [selectedPredefined]);
 
+  // Get address for current network
+  const getContractAddress = (contract: PredefinedMethod): string => {
+    return contract.addresses?.[network] || '';
+  };
+
   // Handle contract selection - auto-fill address
-  const handleContractSelect = (contract: (PredefinedMethod & { address: string }) | null) => {
+  const handleContractSelect = (contract: PredefinedMethod | null) => {
     setSelectedPredefined(contract);
     if (contract) {
-      setContractAddress(contract.address);
+      setContractAddress(getContractAddress(contract));
     } else {
       setContractAddress('');
     }
   };
+
+  // Update address when network changes
+  useEffect(() => {
+    if (selectedPredefined) {
+      setContractAddress(getContractAddress(selectedPredefined));
+    }
+  }, [network, selectedPredefined]);
 
   // Handle function selection
   const handleFunctionSelect = (signature: string) => {
@@ -189,6 +184,16 @@ function App() {
         <p className="subtitle">
           Build governance proposal actions for Tokamak Network DAOCommitteeProxy
         </p>
+        <div className="network-selector">
+          <label>Network:</label>
+          <select
+            value={network}
+            onChange={(e) => setNetwork(e.target.value as NetworkType)}
+          >
+            <option value="mainnet">Mainnet</option>
+            <option value="sepolia">Sepolia</option>
+          </select>
+        </div>
       </header>
 
       <div className="main-layout">
@@ -197,16 +202,21 @@ function App() {
           <h2>Contracts</h2>
           <p className="sidebar-desc">Controllable by DAOCommitteeProxy</p>
           <div className="contract-list">
-            {DAO_CONTRACTS.map((contract) => (
-              <div
-                key={contract.id}
-                className={`contract-item ${selectedPredefined?.id === contract.id ? 'selected' : ''}`}
-                onClick={() => handleContractSelect(contract)}
-              >
-                <div className="contract-name">{contract.name.replace('Tokamak ', '')}</div>
-                <div className="contract-address">{contract.address.slice(0, 10)}...{contract.address.slice(-8)}</div>
-              </div>
-            ))}
+            {DAO_CONTRACTS.map((contract) => {
+              const address = getContractAddress(contract);
+              return (
+                <div
+                  key={contract.id}
+                  className={`contract-item ${selectedPredefined?.id === contract.id ? 'selected' : ''}`}
+                  onClick={() => handleContractSelect(contract)}
+                >
+                  <div className="contract-name">{contract.name.replace('Tokamak ', '')}</div>
+                  <div className="contract-address">
+                    {address ? `${address.slice(0, 10)}...${address.slice(-8)}` : 'No address'}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </aside>
 
@@ -225,7 +235,7 @@ function App() {
                 <h2>{selectedPredefined.name.replace('Tokamak ', '')}</h2>
                 <p className="card-description">{selectedPredefined.description}</p>
                 <div className="form-group">
-                  <label>Contract Address (Mainnet)</label>
+                  <label>Contract Address ({network === 'mainnet' ? 'Mainnet' : 'Sepolia'})</label>
                   <input
                     type="text"
                     value={contractAddress}

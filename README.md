@@ -2,7 +2,7 @@
 
 A TypeScript library for building DAO governance proposal actions for Tokamak Network.
 
-This library provides predefined ABI definitions and calldata encoding/decoding utilities for contracts that can be controlled by **DAOCommitteeProxy** through DAO governance proposals on Ethereum Mainnet.
+This library provides predefined ABI definitions and calldata encoding/decoding utilities for contracts that can be controlled by **DAOCommitteeProxy** through DAO governance proposals on Ethereum Mainnet and Sepolia Testnet.
 
 ## Supported Contracts
 
@@ -10,8 +10,10 @@ This library provides predefined ABI definitions and calldata encoding/decoding 
 
 Self-governance functions for the DAO Committee.
 
-| Address | `0xDD9f0cCc044B0781289Ee318e5971b0139602C26` |
-|---------|---------------------------------------------|
+| Network | Address |
+|---------|---------|
+| Mainnet | `0xDD9f0cCc044B0781289Ee318e5971b0139602C26` |
+| Sepolia | `0x79cfbEaCB5470bBe3B8Fe76db2A61Fc59e588C38` |
 
 | Function | Description |
 |----------|-------------|
@@ -26,8 +28,10 @@ Self-governance functions for the DAO Committee.
 
 Manages DAO proposals and voting.
 
-| Address | `0xcD4421d082752f363E1687544a09d5112cD4f484` |
-|---------|---------------------------------------------|
+| Network | Address |
+|---------|---------|
+| Mainnet | `0xcD4421d082752f363E1687544a09d5112cD4f484` |
+| Sepolia | `0x1444f7a8bC26a3c9001a13271D56d6fF36B44f08` |
 
 | Function | Description |
 |----------|-------------|
@@ -49,8 +53,10 @@ Manages DAO proposals and voting.
 
 Manages the DAO treasury.
 
-| Address | `0x2520CD65BAa2cEEe9E6Ad6EBD3F45490C42dd303` |
-|---------|---------------------------------------------|
+| Network | Address |
+|---------|---------|
+| Mainnet | `0x2520CD65BAa2cEEe9E6Ad6EBD3F45490C42dd303` |
+| Sepolia | `0xB9F6c9E75418D7E5a536ADe08f0218196BB3eBa4` |
 
 | Function | Description |
 |----------|-------------|
@@ -69,8 +75,10 @@ Manages the DAO treasury.
 
 Manages staking deposits.
 
-| Address | `0x0b58ca72b12f01fc05f8f252e226f3e2089bd00e` |
-|---------|---------------------------------------------|
+| Network | Address |
+|---------|---------|
+| Mainnet | `0x0b58ca72b12f01fc05f8f252e226f3e2089bd00e` |
+| Sepolia | `0x90ffcc7F168DceDBEF1Cb6c6eB00cA73F922956F` |
 
 | Function | Description |
 |----------|-------------|
@@ -83,8 +91,10 @@ Manages staking deposits.
 
 Manages L1 bridges and candidate add-ons.
 
-| Address | `0x39d43281A4A5e922AB0DCf89825D73273D8C5BA4` |
-|---------|---------------------------------------------|
+| Network | Address |
+|---------|---------|
+| Mainnet | `0x39d43281A4A5e922AB0DCf89825D73273D8C5BA4` |
+| Sepolia | `0x2D47fa57101203855b336e9E61BC9da0A6dd0Dbc` |
 
 | Function | Access | Description |
 |----------|--------|-------------|
@@ -99,8 +109,10 @@ Manages L1 bridges and candidate add-ons.
 
 Manages Layer 2 networks.
 
-| Address | `0xD6Bf6B2b7553c8064Ba763AD6989829060FdFC1D` |
-|---------|---------------------------------------------|
+| Network | Address |
+|---------|---------|
+| Mainnet | `0xD6Bf6B2b7553c8064Ba763AD6989829060FdFC1D` |
+| Sepolia | `0x58B4C2FEf19f5CDdd944AadD8DC99cCC71bfeFDc` |
 
 | Function | Description |
 |----------|-------------|
@@ -114,8 +126,10 @@ Manages Layer 2 networks.
 
 Manages Layer 2 registration.
 
-| Address | `0x7846c2248a7b4de77e9c2bae7fbb93bfc286837b` |
-|---------|---------------------------------------------|
+| Network | Address |
+|---------|---------|
+| Mainnet | `0x7846c2248a7b4de77e9c2bae7fbb93bfc286837b` |
+| Sepolia | `0xA0a9576b437E52114aDA8b0BC4149F2F5c604581` |
 
 | Function | Description |
 |----------|-------------|
@@ -131,19 +145,10 @@ Manages Layer 2 registration.
 | Candidate contracts | Each Candidate is owned by its operator |
 | TON / WTON | Token contracts with separate ownership |
 
-## Installation
-
-```bash
-npm install @tokamak-ecosystem/dao-action-builder ethers
-# or
-pnpm add @tokamak-ecosystem/dao-action-builder ethers
-# or
-yarn add @tokamak-ecosystem/dao-action-builder ethers
-```
-
 ## Reference
 
 - [Mainnet Deployed Addresses](https://github.com/tokamak-network/ton-staking-v2/blob/ton-staking-v2/docs/deployed-addresses-mainnet.md)
+- [Sepolia Deployed Addresses](https://github.com/tokamak-network/ton-staking-v2/blob/ton-staking-v2/docs/deployed-addresses-sepolia.md)
 - [ton-staking-v2 Repository](https://github.com/tokamak-network/ton-staking-v2)
 - [tokamak-dao-contracts Repository](https://github.com/tokamak-network/tokamak-dao-contracts)
 

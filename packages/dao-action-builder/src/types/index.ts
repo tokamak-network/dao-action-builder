@@ -119,6 +119,19 @@ export interface BuildActionInput {
 }
 
 /**
+ * Network types
+ */
+export type NetworkType = 'mainnet' | 'sepolia';
+
+/**
+ * Contract addresses by network
+ */
+export interface ContractAddresses {
+  mainnet?: string;
+  sepolia?: string;
+}
+
+/**
  * Predefined method definition
  */
 export interface PredefinedMethod {
@@ -126,6 +139,7 @@ export interface PredefinedMethod {
   name: string;
   description?: string;
   abi: AbiFunction[];
+  addresses?: ContractAddresses;
 }
 
 /**

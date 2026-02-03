@@ -61,7 +61,14 @@ body {
   color: #666;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  padding: 16px 16px 12px;
+  padding: 16px 16px 8px;
+  border-bottom: none;
+}
+
+.sidebar-desc {
+  font-size: 11px;
+  color: #999;
+  padding: 0 16px 12px;
   border-bottom: 1px solid #eee;
 }
 
@@ -102,6 +109,13 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.contract-address {
+  font-size: 11px;
+  color: #999;
+  font-family: 'Monaco', 'Menlo', monospace;
+  margin-top: 4px;
 }
 
 /* Main Content */

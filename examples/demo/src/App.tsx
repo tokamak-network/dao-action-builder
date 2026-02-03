@@ -4,19 +4,56 @@ import {
   decodeCalldata,
   validateParameterType,
   getParameterTypeErrorMessage,
-  predefinedMethodRegistry,
   getFunctionSignature,
+  daoCommitteeMethods,
+  daoAgendaManagerMethods,
+  daoVaultMethods,
+  depositManagerMethods,
+  l1BridgeRegistryMethods,
+  layer2ManagerMethods,
+  layer2RegistryMethods,
   type AbiFunction,
   type PredefinedMethod,
 } from '@tokamak-network/dao-action-builder';
+
+// Contracts controllable by DAOCommitteeProxy with mainnet addresses
+const DAO_CONTRACTS: Array<PredefinedMethod & { address: string }> = [
+  {
+    ...daoCommitteeMethods,
+    address: '0xDD9f0cCc044B0781289Ee318e5971b0139602C26',
+  },
+  {
+    ...daoAgendaManagerMethods,
+    address: '0xcD4421d082752f363E1687544a09d5112cD4f484',
+  },
+  {
+    ...daoVaultMethods,
+    address: '0x2520CD65BAa2cEEe9E6Ad6EBD3F45490C42dd303',
+  },
+  {
+    ...depositManagerMethods,
+    address: '0x0b58ca72b12f01fc05f8f252e226f3e2089bd00e',
+  },
+  {
+    ...l1BridgeRegistryMethods,
+    address: '0x39d43281A4A5e922AB0DCf89825D73273D8C5BA4',
+  },
+  {
+    ...layer2ManagerMethods,
+    address: '0xD6Bf6B2b7553c8064Ba763AD6989829060FdFC1D',
+  },
+  {
+    ...layer2RegistryMethods,
+    address: '0x7846c2248a7b4de77e9c2bae7fbb93bfc286837b',
+  },
+];
 
 function App() {
   // Contract address
   const [contractAddress, setContractAddress] = useState('');
 
   // Predefined methods
-  const [selectedPredefined, setSelectedPredefined] = useState<PredefinedMethod | null>(null);
-  const predefinedMethods = useMemo(() => predefinedMethodRegistry.getAll(), []);
+  const [selectedPredefined, setSelectedPredefined] = useState<(PredefinedMethod & { address: string }) | null>(null);
 
   // Function selection
   const [selectedFunction, setSelectedFunction] = useState<AbiFunction | null>(null);
@@ -38,6 +75,16 @@ function App() {
     }
     return [];
   }, [selectedPredefined]);
+
+  // Handle contract selection - auto-fill address
+  const handleContractSelect = (contract: (PredefinedMethod & { address: string }) | null) => {
+    setSelectedPredefined(contract);
+    if (contract) {
+      setContractAddress(contract.address);
+    } else {
+      setContractAddress('');
+    }
+  };
 
   // Handle function selection
   const handleFunctionSelect = (signature: string) => {
@@ -140,7 +187,7 @@ function App() {
       <header className="app-header">
         <h1>DAO Action Builder</h1>
         <p className="subtitle">
-          Test the @dao-action-builder/core library - validate parameters and encode calldata
+          Build governance proposal actions for Tokamak Network DAOCommitteeProxy
         </p>
       </header>
 
@@ -148,15 +195,16 @@ function App() {
         {/* Left Sidebar - Contract List */}
         <aside className="sidebar">
           <h2>Contracts</h2>
+          <p className="sidebar-desc">Controllable by DAOCommitteeProxy</p>
           <div className="contract-list">
-            {predefinedMethods.map((method) => (
+            {DAO_CONTRACTS.map((contract) => (
               <div
-                key={method.id}
-                className={`contract-item ${selectedPredefined?.id === method.id ? 'selected' : ''}`}
-                onClick={() => setSelectedPredefined(method)}
+                key={contract.id}
+                className={`contract-item ${selectedPredefined?.id === contract.id ? 'selected' : ''}`}
+                onClick={() => handleContractSelect(contract)}
               >
-                <div className="contract-name">{method.name}</div>
-                <div className="contract-desc">{method.description}</div>
+                <div className="contract-name">{contract.name.replace('Tokamak ', '')}</div>
+                <div className="contract-address">{contract.address.slice(0, 10)}...{contract.address.slice(-8)}</div>
               </div>
             ))}
           </div>
@@ -168,16 +216,16 @@ function App() {
             <div className="empty-state">
               <div className="empty-icon">&#x1F4DD;</div>
               <h3>Select a Contract</h3>
-              <p>Choose a contract from the list on the left to start building an action.</p>
+              <p>Choose a contract from the list on the left to start building a governance action.</p>
             </div>
           ) : (
             <>
               {/* Contract Address Input */}
               <div className="card">
-                <h2>{selectedPredefined.name}</h2>
+                <h2>{selectedPredefined.name.replace('Tokamak ', '')}</h2>
                 <p className="card-description">{selectedPredefined.description}</p>
                 <div className="form-group">
-                  <label>Contract Address</label>
+                  <label>Contract Address (Mainnet)</label>
                   <input
                     type="text"
                     value={contractAddress}
@@ -192,7 +240,7 @@ function App() {
                 <div className="card">
                   <h2>Select Function</h2>
                   <div className="form-group">
-                    <label>Function</label>
+                    <label>Function ({availableFunctions.length} available)</label>
                     <select
                       value={selectedFunctionSig}
                       onChange={(e) => handleFunctionSelect(e.target.value)}

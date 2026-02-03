@@ -45,6 +45,6 @@ export const candidateFactoryMethods: PredefinedMethod = {
   abi,
   addresses: {
     mainnet: '0x9fc7100a16407ee24a79c834a56e6eca555a5d7c',
-    sepolia: '0xD05e3E7dD18C3a87dC1bf5cbA16B73C28Ab45080',
+    sepolia: '0x04e3C2B720FB8896A7f9Ea59DdcA85fD45189C7f',
   },
 };
